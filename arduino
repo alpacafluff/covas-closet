@@ -1,0 +1,183 @@
+int myPins[8] = {2, 3, 4, 5, 6, 7, 8, 9};
+bool myPinStates[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+bool currentpinstates[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+int weather = 0;
+int clothes = 0;
+
+int weatherCounter = 0;
+int clothesCounter = 0;
+
+int result = 0;
+int oldresult=-1;
+
+void setup() {
+ // initialize the button pin as a input:
+ //pinMode(buttonPin, INPUT);
+ for (int i = 0; i < 8; i++) {
+ pinMode(myPins[i], INPUT);
+ }
+
+ // initialize serial communication:
+ Serial.begin(9600);
+}
+
+
+void loop() {
+ weatherCounter = 0;
+ clothesCounter = 0;
+
+ // read the pushbutton input pin:
+ for (int i = 0; i < 8; i++) {
+ myPinStates[i] = digitalRead(myPins[i]);
+ //currentpinstates[i] = myPinStates[i];
+ //Serial.println(myPinStates[i]);
+ if (i < 4) {
+ if (myPinStates[i] > 0) {
+ weather = myPins[i];
+ weatherCounter ++;
+
+ /*pins 2-5 are the weather pins:
+
+ 2 snowy [0],
+ 3, sunny [1]
+ 4, cloudy[2].
+ 5, rainy [3]
+ */
+ }
+
+ } else {
+ if (myPinStates[i] > 0) {
+ clothes = myPins[i];
+ clothesCounter++;
+ /*pins 6-9 are the outfit options:
+ 6 snowy [4],
+ 7, sunny [5]
+ 8, cloudy [6].
+ 9, rainy [7]
+ */
+ }
+
+ }
+ }
+
+ if (weatherCounter > 0 && clothesCounter > 0) {
+ if (weather == 2) {
+ 
+ if (clothes == 6) {
+ result = 1;
+ //snowy weather, snowy clothes, correct option
+ } 
+ 
+ else if (clothes == 7) {
+ result = 2;
+ //snowy weather, sunny clothes
+ } 
+ 
+ else if (clothes == 8) {
+ result = 3;
+ //snowy weather, cloudy clothes
+ } 
+ 
+ else if (clothes == 9) {
+ result = 4;
+ //snowy weather, rainy clothes
+ }
+
+ } else if (weather == 3) {
+ if (clothes == 6) {
+ result = 5;
+ //sunny weather, snowy clothes
+ } 
+ 
+ else if (clothes == 7) {
+ result = 6;
+ //sunny weather, sunny clothes, correct option
+ } 
+ 
+ else if (clothes == 8) {
+ result = 7;
+ //sunny weather, cloudy clothes
+ } 
+ 
+ else if (clothes == 9) {
+ result = 8;
+ //sunny weather, rainy clothes
+ }
+
+ } 
+ 
+ else if (weather == 4) {
+ if (clothes == 6) {
+ result = 9;
+ //cloudy weather, snowy clothes
+ } 
+ 
+ else if (clothes == 7) {
+ result = 10;
+ //cloudy weather, sunny clothes
+ } 
+ 
+ else if (clothes == 8) {
+ result = 11;
+ //cloudy weather, cloudy clothes, correct option
+ } 
+ 
+ else if (clothes == 9) {
+ result = 12;
+ //cloudy weather, rainy clothes
+ }
+
+ } 
+ 
+ else if (weather == 5) {
+ if (clothes == 6) {
+ result = 13;
+ //rainy weather, snowy clothes,
+ } 
+ 
+ else if (clothes == 7) {
+ result = 14;
+ //rainy weather, sunny clothes
+ } 
+ 
+ else if (clothes == 8) {
+ result = 15;
+ //rainy weather, cloudy clothes
+ } 
+ 
+ else if (clothes == 9) {
+ result = 16;
+ //rainy weather, rainy clothes, correct option
+ }
+ }
+ }
+
+ else if (weatherCounter ==0 && clothesCounter ==1)
+ {
+ result = 17;
+ //weather switch activated, missing clothes switch
+ }
+ 
+
+ else if (weatherCounter ==1 && clothesCounter == 0)
+ {
+ result = 18;
+ // clothes switch activated, missing weather switch
+ }
+
+ else {
+ result = 0; //none
+ }
+
+// Serial.println(weatherCounter);
+ // Serial.println(clothesCounter);
+ if (oldresult != result)
+ {
+ oldresult = result;
+ Serial.println(result);
+ }
+ 
+
+ delay(60);
+}
