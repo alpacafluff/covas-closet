@@ -1,0 +1,249 @@
+var serial; 
+var inData;
+
+function preload() {
+ 
+//The home/initial page, where Cova is in her room, instructions appear
+c0 = createImg('0.gif');
+c0.position(0,0);
+c0.show();
+ 
+//snowy weather, snowy clothes, correct option
+c1 = createImg('1.png');
+c1.position(0,0);
+c1.hide();
+
+//snowy weather, sunny clothes 
+c2 = createImg('2.png');
+c2.position(0,0);
+c2.hide();
+
+//snowy weather, cloudy clothes
+c3 = createImg('3.png');
+c3.position(0,0);
+c3.hide();
+ 
+//snowy weather, rainy clothes 
+c4 = createImg('4.png');
+c4.position(0,0);
+c4.hide();
+ 
+//sunny weather, snowy clothes
+c5 = createImg('5.png');
+c5.position(0,0);
+c5.hide();
+ 
+//sunny weather, sunny clothes, correct option 
+c6 = createImg('6.png');
+c6.position(0,0);
+c6.hide();
+ 
+//sunny weather, cloudy clothes 
+c7 = createImg('7.png');
+c7.position(0,0);
+c7.hide();
+ 
+//sunny weather, rainy clothes
+c8 = createImg('8.png');
+c8.position(0,0);
+c8.hide();
+ 
+//cloudy weather, snowy clothes 
+c9 = createImg('9.png');
+c9.position(0,0);
+c9.hide();
+
+//cloudy weather, sunny clothes 
+c10 = createImg('10.png');
+c10.position(0,0);
+c10.hide();
+ 
+//cloudy weather, cloudy clothes, correct option 
+c11 = createImg('11.png');
+c11.position(0,0);
+c11.hide();
+ 
+//cloudy weather, rainy clothes 
+c12 = createImg('12.png');
+c12.position(0,0);
+c12.hide();
+ 
+//rainy weather, snowy clothes, 
+c13 = createImg('13.png');
+c13.position(0,0);
+c13.hide();
+ 
+//rainy weather, sunny clothes 
+c14 = createImg('14.png');
+c14.position(0,0);
+c14.hide();
+ 
+//rainy weather, cloudy clothes 
+c15 = createImg('15.png');
+c15.position(0,0);
+c15.hide();
+ 
+//rainy weather, rainy clothes, correct option 
+c16 = createImg('16.png');
+c16.position(0,0);
+c16.hide();
+ 
+//other options
+ 
+// clothes switch activated, missing weather switch 
+c17 = createImg('17.png');
+c17.position(0,0);
+c17.hide();
+ 
+//weather switch activated, missing clothes switch
+c18 = createImg('18.png');
+c18.position(0,0);
+c18.hide();
+ 
+ 
+}
+
+function setup() {
+createCanvas(1024, 768);
+
+background(0);
+
+serial = new p5.SerialPort('192.168.1.80');
+
+serial.on('data', serialEvent);
+ 
+serial.open("/dev/cu.usbmodemFA131"); 
+serial.list();
+
+}
+
+function draw() {
+println(inData);
+ 
+if(inData===0){
+hideAll()
+c0.show();
+}
+ 
+if(inData==1){
+hideAll()
+c1.show();
+}
+ 
+if(inData==2){
+hideAll()
+c2.show();
+}
+if(inData==3){
+hideAll()
+c3.show();
+}
+if(inData==4){
+hideAll()
+c4.show();
+}
+if(inData==5){
+hideAll()
+c5.show();
+}
+if(inData==6){
+hideAll()
+c6.show();
+}
+if(inData==7){
+hideAll()
+c7.show();
+}
+if(inData==8){
+hideAll()
+c8.show();
+}
+if(inData==9){
+hideAll()
+c9.show();
+}
+if(inData==10){
+hideAll()
+c10.show();
+}
+if(inData==11){
+hideAll()
+c11.show();
+}
+ 
+if(inData==12){
+hideAll()
+c12.show();
+}
+ 
+if(inData==13){
+hideAll()
+c13.show();
+} 
+ 
+if(inData==14){
+hideAll()
+c14.show();
+} 
+ 
+if(inData==15){
+hideAll()
+c15.show();
+} 
+ 
+ 
+if(inData==16){
+hideAll()
+c16.show();
+} 
+ 
+ 
+if(inData==17){
+hideAll()
+c17.show();
+}
+if(inData==18){
+hideAll()
+c18.show();
+}
+ 
+ 
+}
+
+
+function printList(portList) {
+for (var i = 0; i < portList.length; i++) {
+
+println(i + " " + portList[i]);
+}
+}
+
+function serialEvent() {
+inData = Number(serial.readLine());
+
+
+}
+
+
+function hideAll(){
+
+c0.hide();
+c1.hide();
+c2.hide();
+c3.hide();
+c4.hide();
+c5.hide();
+c6.hide(); 
+c7.hide(); 
+c8.hide(); 
+c9.hide(); 
+c10.hide(); 
+c11.hide(); 
+c12.hide(); 
+c13.hide(); 
+c14.hide();
+c15.hide(); 
+c17.hide(); 
+c18.hide(); 
+ 
+}
